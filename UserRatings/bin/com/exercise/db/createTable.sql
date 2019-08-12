@@ -1,0 +1,2 @@
+create table user_ratings(id int primary key not null generated always as identity (start with  1000, increment by 1), name varchar(12) not null, rating int not null, comment varchar(100), rating_date date default current_date);
+	

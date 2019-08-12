@@ -1,0 +1,113 @@
+package com.userfeedback.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.exercise.userRatingsModel.UserRatings;
+
+public class UserRatingsDao {
+
+	Connection connection = null;
+	PreparedStatement preparedStatement = null;
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public List<UserRatings> selectAll() {
+
+		ResultSet resultSet = null;
+
+		List<UserRatings> userData = new ArrayList<>();
+
+		try {
+
+			preparedStatement = this.connection.prepareStatement("select * from user_ratings");
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				UserRatings userRatings = new UserRatings();
+				userRatings.setUserId(resultSet.getInt(1));
+				userRatings.setUserName(resultSet.getString(2));
+				userRatings.setRating(resultSet.getInt(3));
+				userRatings.setComment(resultSet.getString(4));
+				userRatings.setDate(resultSet.getString(5));
+				userData.add(userRatings);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return userData;
+
+	}
+
+	public void saveUserRating(String username, int rating, String comment) {
+
+		try {
+			preparedStatement = this.connection.prepareStatement(
+					"insert into user_ratings(username,rating,comment) values (?,?,?) from user_ratings");
+			preparedStatement.setString(1, username);
+			preparedStatement.setInt(2, rating);
+			preparedStatement.setString(3, comment);
+
+			preparedStatement.executeQuery();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public float getAverage() {
+
+		ResultSet resultSet = null;
+		float averageRating = 0;
+		int sum = 0;
+
+		try {
+
+			preparedStatement = this.connection.prepareStatement("select * from user_ratings");
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				sum = sum + resultSet.getInt(3);
+			}
+
+			averageRating = (float) (sum / resultSet.getFetchSize());
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return averageRating;
+	}
+
+	public int getTotalUsers() {
+
+		ResultSet resultSet = null;
+		int totalUsers = 0;
+
+		try {
+
+			preparedStatement = this.connection.prepareStatement("select * from user_ratings");
+			resultSet = preparedStatement.executeQuery();
+			totalUsers = resultSet.getFetchSize();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return totalUsers;
+
+	}
+
+}
