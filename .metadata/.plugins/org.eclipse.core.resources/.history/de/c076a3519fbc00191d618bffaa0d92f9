@@ -1,0 +1,7 @@
+package snippet;
+
+public class Snippet {
+	<context:property-placeholder
+			location="com/example/annonation/di/jdbc.properties,com/example/annonation/di/app.properties" />
+}
+

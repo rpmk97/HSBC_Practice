@@ -1,5 +1,5 @@
 #derby database specific properties
 jdbc.driver=org.apache.derby.jdbc.ClientDriver
-jdbc.url=jdbc:derby://localhost:4444/C:/HSBC_Practice/DB
+jdbc.url=jdbc:derby://localhost:1527/C:/HSBC-DB/Training
 jdbc.user=
 jdbc.password=

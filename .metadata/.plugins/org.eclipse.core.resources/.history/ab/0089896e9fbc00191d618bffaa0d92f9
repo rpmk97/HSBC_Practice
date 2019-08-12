@@ -19,7 +19,7 @@ public class UserRatingsService {
 
 	List<UserRatings> listAll() {
 
-		DBUtil.open(userRatingsDao.driver,userRatingsDao.url);
+		DBUtil.open();
 		this.userRatingsDao.setConnection(DBUtil.get());
 
 		return this.userRatingsDao.selectAll();
@@ -27,7 +27,7 @@ public class UserRatingsService {
 
 	float averageRating() {
 
-		DBUtil.open(userRatingsDao.driver,userRatingsDao.url);
+		DBUtil.open();
 		this.userRatingsDao.setConnection(DBUtil.get());
 
 		return this.userRatingsDao.getAverage();
@@ -36,7 +36,7 @@ public class UserRatingsService {
 
 	int userCount() {
 
-		DBUtil.open(userRatingsDao.driver,userRatingsDao.url);
+		DBUtil.open();
 		this.userRatingsDao.setConnection(DBUtil.get());
 
 		return this.userRatingsDao.getTotalUsers();
